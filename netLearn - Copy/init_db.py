@@ -24,6 +24,18 @@ def init_db():
                 icon TEXT
             )
         ''')
+
+        conn.execute('''
+	        CREATE TABLE IF NOT EXISTS user (
+	            id INTEGER PRIMARY KEY AUTOINCREMENT,
+	            nama_lengkap TEXT,
+	            username TEXT,
+	            password TEXT,
+	            email TEXT,
+	            role TEXT
+	        )
+	    ''')
+		
         connection.execute('''
 			CREATE TABLE IF NOT EXISTS user_progress (
 				id INTEGER PRIMARY KEY AUTOINCREMENT,
