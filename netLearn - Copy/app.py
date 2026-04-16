@@ -3,12 +3,16 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import jsonify
 from datetime import datetime, timedelta
+import os
 
 app = Flask(__name__)
 app.secret_key = 'kunci_rahasia_kamu_di_sini' # Wajib ada untuk session
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+DATABASE = os.path.join(basedir, 'database.db')
+
 def get_db_connection():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
