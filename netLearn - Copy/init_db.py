@@ -25,7 +25,7 @@ def init_db():
             )
         ''')
 
-        conn.execute('''
+        connection.execute('''
 	        CREATE TABLE IF NOT EXISTS user (
 	            id INTEGER PRIMARY KEY AUTOINCREMENT,
 	            nama_lengkap TEXT,
