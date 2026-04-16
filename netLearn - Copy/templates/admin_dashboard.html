@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - TKJ Smart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Smart Admin</h2>
+        <nav>
+            <a href="/admin" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="/dashboard"><i class="fas fa-external-link-alt"></i> Lihat Website</a>
+            <hr>
+            <a href="/logout" class="logout-link"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Manajemen Konten</h1>
+            <div class="btn-group">
+                <a href="/admin/add-modul" class="btn btn-primary">
+                    <i class="fas fa-book"></i> Modul
+                </a>
+                <a href="/admin/add-video" class="btn btn-success">
+                    <i class="fas fa-video"></i> Video
+                </a>
+                <a href="/admin/add-account" class="btn btn-info">
+                    <i class="fas fa-user-plus"></i> Akun
+                </a>
+                <!-- 🔥 GANTI DI SINI -->
+                <a href="{{ url_for('add_quiz') }}" class="btn btn-masyaallah">
+                    <i class="fas fa-lightbulb"></i> Quiz
+                </a>
+            </div>
+        </div>
+
+        <!-- 📚 MODUL -->
+        <div class="section-card">
+            <h3>Daftar Modul</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Judul</th>
+                        <th>Kategori</th>
+                        <th>Aksi</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in modules %}
+                    <tr>
+                        <td>{{ m.judul }}</td>
+                        <td><span class="badge">{{ m.kategori }}</span></td>
+                        <td>
+                            <a href="/admin/delete-modul/{{ m.id }}" class="btn-icon delete" onclick="return confirm('Hapus modul?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+							<a href="/admin/edit-modul/{{ m.id }}">
+								<i class="fas fa-edit"></i>
+							</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 🎥 VIDEO -->
+        <div class="section-card">
+            <h3>Daftar Video</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Judul</th>
+                        <th>YouTube ID</th>
+                        <th>Aksi</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for v in videos %}
+                    <tr>
+                        <td>{{ v.judul }}</td>
+                        <td><code>{{ v.youtube_id }}</code></td>
+                        <td>
+                            <a href="/admin/delete-video/{{ v.id }}" class="btn-icon delete" onclick="return confirm('Hapus video?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+							<a href="/admin/edit-video/{{ v.id }}">
+								<i class="fas fa-edit"></i>
+							</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 🧠 QUIZ -->
+        <div class="section-card">
+            <h3>Daftar Latihan Soal (Quiz)</h3>
+
+            <!-- 🔥 GANTI ROUTE -->
+            <a href="{{ url_for('add_quiz') }}" class="btn btn-primary" style="margin-bottom: 15px; display: inline-block;">
+                + Tambah Latihan
+            </a>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Judul Latihan</th>
+                        <th>Jumlah Soal</th>
+                        <th>Aksi</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for q in quizzes %}
+                    <tr>
+                        <td><strong>{{ q.judul }}</strong></td>
+                        <td>
+                            <span class="badge">{{ q.jumlah_soal }} Soal</span>
+                        </td>
+                        <td>
+                            <!-- ❌ HAPUS add-questions -->
+                            <!-- 🗑️ DELETE tetap -->
+                            <a href="/admin/delete-latihan/{{ q.id }}" 
+                               class="btn-icon delete" 
+                               onclick="return confirm('Hapus latihan?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+							<a href="/admin/edit-quiz/{{ q.id }}" style="color:#3498db;">
+								<i class="fas fa-edit"></i>
+							</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 👤 USER -->
+        <div class="section-card">
+            <h3>Daftar Siswa Terdaftar</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Nama Lengkap</th>
+                        <th>Role</th>
+                        <th>Aksi</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users %}
+                    <tr>
+                        <td>{{ u.username }}</td>
+                        <td>{{ u.nama_lengkap }}</td>
+                        <td><span class="badge">{{ u.role }}</span></td>
+                        <td>
+                            <a href="/admin/delete-user/{{ u.id }}" 
+                               class="btn-icon delete" 
+                               onclick="return confirm('Hapus akun ini?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+							<a href="/admin/edit-user/{{ u.id }}">
+								<i class="fas fa-edit"></i>
+							</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

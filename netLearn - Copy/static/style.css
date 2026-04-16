@@ -1,0 +1,550 @@
+html {
+    scroll-behavior: smooth;
+}
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif; background-color: #f0f2f5; color: #333;margin: 0;padding: 0; overflow-x: hidden;
+}
+
+/* Navbar */
+nav {
+	position: sticky;
+	top : 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 50px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.nav-links a {
+    text-decoration: none; margin-left: 20px; color: #333; font-weight: bold;
+}
+
+/* Hero Section (Gambar 1) */
+.hero {
+    position: relative; height: 85vh; display: flex; align-items: center; color: white;
+}
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Penting: agar video menutupi area tanpa gepeng */
+    z-index: -2;
+}
+.overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: -1;
+}
+.hero-content { padding-left: 50px; max-width: 600px; }
+
+/* Tentang (Gambar 2) */
+.about { display: flex; padding: 80px 50px; background: white; align-items: center; gap: 50px; }
+.about-grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.about-grid img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
+
+/* Fitur (Gambar 3) */
+.fitur-section { padding: 80px 50px; text-align: center; }
+.fitur-flex { display: flex; justify-content: center; gap: 30px; margin-top: 40px; }
+.card { width: 300px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.card-title { background: #007bff; color: white; padding: 10px; font-weight: bold; }
+.card-desc { background: white; padding: 20px; border: 1px solid #ddd; }
+
+/* Guru (Gambar 4) */
+.guru-section {
+    padding: 80px 20px;
+    text-align: center;
+    background-color: #f4f7f6;
+}
+.guru-section {
+    padding: 80px 20px;
+    text-align: center;
+    background-color: #f4f7f6;
+}
+
+.slider-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 40px 0;
+}
+
+/* Base Card Guru */
+.card-guru {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+/* Foto Setengah Lingkungan (Kubah) */
+.foto-kubah {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 100px 100px 0 0; /* Membuat atas bulat, bawah kotak */
+    border: 4px solid #fff;
+    background: #ccc;
+}
+
+/* Kotak Nama (Persegi) */
+.nama-box {
+    width: 150px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Kotak Mapel (Persegi Panjang lebih lebar) */
+.mapel-box {
+    width: 180px; /* Lebih lebar dari kotak nama */
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 8px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+}
+
+/* Efek Sorot untuk Guru di Tengah */
+.card-guru.focus {
+    transform: scale(1.25);
+    z-index: 10;
+}
+
+.card-guru.side {
+    opacity: 0.5;
+    transform: scale(0.9);
+}
+
+.nav-btn {
+    font-size: 50px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+    transition: 0.3s;
+}
+
+.nav-btn:hover { color: #0056b3; }
+
+.guru-footer-text {
+    margin-top: 30px;
+    font-style: italic;
+    color: #666;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* FAQ (Gambar 5) */
+.faq-section { padding: 80px 50px; max-width: 800px; margin: 0 auto; }
+details { background: white; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; }
+summary { padding: 15px; font-weight: bold; cursor: pointer; list-style: none; display: flex; justify-content: space-between; }
+
+/* Footer (Gambar 6) */
+.main-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 50px;
+    background-color: #ffffff;
+    border-top: 2px solid #eeeeee;
+    gap: 30px;
+}
+
+.footer-column {
+    flex: 1; /* Membuat ketiga bagian punya lebar yang sama */
+}
+
+.footer-column.center {
+    text-align: center;
+}
+
+.footer-column h3 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Styling Bagian 1 */
+.footer-logo {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+.footer-text {
+    font-style: italic;
+    margin-bottom: 10px;
+    color: #666;
+}
+.footer-address {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #888;
+}
+
+/* Styling Bagian 2 (Social Media) */
+.social-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+.social-links a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+.social-links a:hover {
+    color: #007bff;
+    transform: translateX(5px);
+}
+.social-links img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Styling Bagian 3 (Contact) */
+.contact-list {
+    list-style: none;
+    padding: 0;
+}
+.contact-list li {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    color: #555;
+}
+/* Container utama footer */
+.main-footer {
+    background-color: #ffffff; /* Ganti dengan warna background area medsos kamu */
+    padding-top: 30px;
+    width: 100%;
+    justify-content : center;
+}
+
+/* Bagian bawah yang ingin dibuat ke tengah */
+.footer-bottom {
+    background-color: #ffffff; /* Samakan dengan warna di atas agar menyatu */
+    padding: 0px 0;
+    text-align: center; /* Membuat teks berada di tengah */
+    border-top: 1px solid #eeeeee; /* Opsional: garis tipis pemisah */
+    margin-top: 0px;
+    margin-bottom : 0px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 1rem;
+    color: #2c3e50;
+    font-weight: 600; /* Agar sedikit tebal seperti di gambar */
+}
+/* Container utama harus relative agar anak-anaknya bisa absolute */
+.about-container {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    padding: 100px 50px;
+    display: flex;
+    justify-content: flex-end; /* Memindahkan kotak biru ke kanan */
+    align-items: center;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+/* Kotak Biru (Penjelasan) */
+.explanation-box {
+    width: 50%; /* Lebar kotak biru */
+    padding: 40px;
+    background-color: #fff;
+    border: 1px solid #000000; /* Warna biru sesuai coretan */
+    border-radius: 15px;
+    z-index: 10;
+    box-shadow: 10px 10px 0px rgba(0, 0, 255, 0.1);
+}
+
+.explanation-box h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* Styling Foto-foto Melayang (Bangun Merah) */
+.photo {
+    position: absolute;
+    border: 1px solid #000000; /* Warna merah sesuai coretan */
+    border-radius: 8px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    z-index: 5;
+    background: #fff;
+}
+
+.photo:hover {
+    transform: scale(1.1) rotate(5deg);
+    z-index: 20;
+}
+
+/* Mengatur posisi masing-masing foto secara random sesuai gambar */
+.p1 { width: 125px; height: 187.5px; left: 5%; top: 10%; transform: rotate(-5deg); }
+.p2 { width: 126.5px; height: 126.5px; left: 25%; top: 7%; transform: rotate(10deg); }
+.p3 { width: 121px; height: 165px; left: 10%; bottom: 15%; transform: rotate(-14deg); }
+.p4 { width: 150px; height: 150px; left: 30%; bottom: 10%; transform: rotate(10deg); }
+.p5 { width: 126.5px; height: 172.5px; left: 35%; top: 30%; transform: rotate(3deg); }
+.p6 { width: 130px; height: 90px; left: 18%; bottom: 50%; transform: rotate(20deg); } /* Bentuk lingkaran */
+
+/* Background khusus halaman login */
+.login-body {
+    background: linear-gradient(135deg, #007bff, #00d4ff);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* Container Utama */
+.login-wrapper {
+    display: flex;
+    width: 900px; /* Lebar total kotak login */
+    height: 550px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden; /* Agar foto tidak keluar dari border radius */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+	
+}
+
+/* Sisi Kiri (Foto) */
+.login-image {
+    flex: 1;
+    background-image: url('https://picsum.photos/600/800?computer'); /* Ganti dengan path fotomu */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+}
+
+.image-overlay {
+    color: white;
+    background: rgba(0, 0, 0, 0.4); /* Efek gelap agar teks terbaca */
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+/* Sisi Kanan (Form) */
+/* Sisi Kanan (Form) - Kita buat lebih rapi */
+.login-form-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px; /* Tambah padding agar tidak terlalu mepet */
+    background-color: #ffffff;
+}
+
+.form-content h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #2d3436;
+    margin-bottom: 5px;
+}
+
+.form-content p {
+    font-size: 0.95rem;
+    color: #636e72;
+    margin-bottom: 30px;
+}
+
+/* Merapikan label dan input */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #2d3436;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px; /* Lebih tebal agar premium */
+    border: 2px solid #f1f2f6; /* Border lebih soft */
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+/* Efek saat input diklik */
+.input-group input:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+}
+
+/* Tombol Masuk yang lebih cantik */
+.btn-login {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Link Kembali */
+.back-home {
+    display: inline-block;
+    margin-top: 25px;
+    text-decoration: none;
+    color: #b2bec3;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+}
+
+.back-home:hover {
+    color: #007bff;
+}
+
+.dashboard-body {
+    background-color: #f0f2f5;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0; /* MEMASTIKAN TIDAK ADA JARAK ANTAR FLEX ITEM */
+    align-items: stretch;
+}
+/* SIDEBAR (Kiri) */
+/* Sidebar Container Utama */
+.sidebar {
+    width: 260px;
+    min-width: 260px; /* Mengunci lebar sidebar */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: 1000;
+}
+
+/* Header Logo */
+.sidebar-logo {
+    padding: 0 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    color: #2d3436;
+    margin-bottom: 40px;
+}
+
+/* Menu Navigasi Rata Kiri (Nempel Pinggir) */
+/* Sidebar Container */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    
+    /* KUNCI UTAMA DI SINI */
+    position: sticky; /* Atau sticky */
+    height: 100vh;   /* Tinggi penuh layar */
+    top: 0;
+    left: 0;
+    
+    display: flex;
+    flex-direction: column;
+    padding: 30px 0;
+    box-shadow: 2px 0 15px rgba(0,0,0,0.05);
+    z-index: 100; /* Agar tidak tertutup konten */
+}
+
+/* Menu Navigasi */
+.sidebar-menu {
+    /* Hapus flex: 1; agar dia tidak mengambil sisa ruang */
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Jarak antar kotak menu dibuat tipis saja */
+    padding: 0 15px;
+    margin-bottom: auto; /* Trik ini akan mendorong menu logout ke bawah, tapi menu utama tetap rapat di atas */
+}
+
+/* Keadaan normal tombol */
+.sidebar-menu a {
+    text-decoration: none;
+    color: #636e72; /* Warna teks abu-abu saat normal */
+    padding: 12px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: transparent; /* Background polos */
+    transition: all 0.3s ease; /* Biar perubahan warnanya halus/smooth */
+    font-weight: 500;
+}
+
+/* EFEK SAAT MOUSE DI ATAS TOMBOL (Hover) */
+.sidebar-menu a:hover {
+    background-color: #007bff; /* Berubah jadi Biru */
+    color: white;              /* Tulisan berubah jadi Putih agar terbaca */
+}
+
+/* EFEK KHUSUS UNTUK ICON SAAT HOVER */
+.sidebar-menu a:hover i {
+    color: white;
+}
+
+/* Agar tombol yang sedang aktif (diklik) juga tetap biru */
+.sidebar-menu a.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Bagian Logout */
+.sidebar-footer {
+    padding: 20px 15px 0 15px;
+    border-top: 1px solid #f1f2f6;
+}
+
+.logout-btn {
+    text-decoration: none;
+    color: #ff4757; /* Warna merah untuk logout */
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: background 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #fff0f0;
+}

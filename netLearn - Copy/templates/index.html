@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>TKJ Smart - Pembelajaran Jaringan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='html.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><strong>[LOGO] TKJ Smart</strong></div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#tentang">Tentang</a>
+            <a href="#fitur">Fitur</a>
+            <a href="#kontak">Kontak</a>
+            <a href="/login" target="_self" class="login-btn">Login</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="overlay"></div>
+        <video autoplay muted loop playsinline class="hero-video">
+			<source src="{{ url_for('static', filename='videos/background.mp4') }}" type="video/mp4">
+		</video>
+        <div class="hero-content">
+            <h1 style="font-size: 50px;">AYO BELAJAR TKJ</h1>
+            <p>Eksplorasi dunia jaringan komputer dengan cara yang asik dan mudah dipahami.</p>
+        </div>
+    </header>
+
+    <section id="tentang" class="about-container">
+		<div class="floating-photos">
+			<img src="https://picsum.photos/200/150?1" class="photo p1 reveal" alt="Foto 1" style="transition-delay: 0.1s;">
+			<img src="https://picsum.photos/100/150?2" class="photo p2 reveal" alt="Foto 2" style="transition-delay: 0.2s;">
+			<img src="https://picsum.photos/150/100?3" class="photo p3 reveal" alt="Foto 3" style="transition-delay: 0.5s;">
+			<img src="https://picsum.photos/120/120?4" class="photo p4 reveal" alt="Foto 4" style="transition-delay: 0.6s;">
+			<img src="https://picsum.photos/100/200?5" class="photo p5 reveal" alt="Foto 5" style="transition-delay: 0.3s;">
+			<img src="https://picsum.photos/80/80?6" class="photo p6 reveal" alt="Foto 6" style="transition-delay: 0.4s;">
+		</div>
+
+		<div class="explanation-box reveal">
+			<h2>Tentang Kami</h2>
+			<p>
+            TKJ Smart adalah website edukasi yang dikembangkan untuk membantu siswa SMK jurusan TKJ 
+            menguasai kompetensi keahlian secara mandiri. Kami menyediakan berbagai fitur mulai dari 
+            modul interaktif, simulasi jaringan, hingga bank soal untuk mempersiapkan siswa menghadapi 
+            dunia industri IT yang dinamis.
+			</p>
+		</div>
+	</section>
+
+    <section id="fitur" class="fitur-section reveal">
+        <h2>Fitur Utama</h2>
+        <div class="fitur-flex">
+            {% for f in fitur %}
+            <div class="card reveal">
+                <img src="{{ f.img }}" width="100%">
+                <div class="card-title">{{ f.judul }}</div>
+                <div class="card-desc">{{ f.desc }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+	<section class="guru-section reveal">
+		<h2>Guru-Guru TKJ</h2>
+    
+		<div class="slider-container reveal">
+			<button class="nav-btn" onclick="moveSlider(-1)">❮</button>
+
+			<div id="guru-display" style="display: flex; align-items: flex-end; gap: 20px;">
+				</div>
+
+			<button class="nav-btn" onclick="moveSlider(1)">❯</button>
+		</div>
+
+		<p class="guru-footer-text">Guru pengajar TKJ adalah guru yang hebat hebat</p>
+	</section>
+	
+	<section class="faq-section reveal">
+        <h2 style="text-align: center; margin-bottom: 30px;">FAQ</h2>
+        {% for item in faq %}
+        <details>
+            <summary>{{ item.tanya }} <span>^</span></summary>
+            <p style="padding: 15px; border-top: 1px solid #eee;">{{ item.jawab }}</p>
+        </details>
+        {% endfor %}
+    </section>
+   
+	<footer id="kontak" class="main-footer reveal">
+		<div class="footer-column">
+			<div class="footer-logo"><strong>[LOGO] TKJ Smart</strong></div>
+			<p class="footer-text">kalau ada pertanyaan tinggal wa aja.</p>
+			<p class="footer-address">
+				Jl. Raya Tongas, Kota Probolinggo<br>
+				Ds. Curah Dringu, Rt. 12/Rw. 05, Kec. Tongas.
+			</p>
+		</div>
+
+		<div class="footer-column center">
+			<h3>Media Sosial</h3>
+			<div class="social-links">
+				<a href="https://instagram.com" target="_blank">
+					<img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
+					<span>Instagram</span>
+				</a>
+				<a href="https://facebook.com" target="_blank">
+					<img src="https://cdn-icons-png.flaticon.com/512/174/174848.png" alt="Facebook">
+					<span>Facebook</span>
+				</a>
+				<a href="https://youtube.com" target="_blank">
+					<img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+					<span>YouTube</span>
+				</a>
+			</div>
+		</div>
+
+		<div class="footer-column">
+			<h3>Contact Person</h3>
+			<ul class="contact-list">
+				<li><strong>Alfian :</strong> 0821-3151-5361</li>
+				<li><strong>Adit   :</strong> 08</li>
+				<li><strong>Email:</strong> info@smkn2-pbl.sch.id</li>
+			</ul>
+		</div>
+	</footer>
+	<footer class="main-footer reveal">
+		<div class="footer-bottom">
+			<p>&copy; 2026 Made with 🔥 from Probolinggo</p>
+		</div>
+	</footer>
+
+	<script>
+		// Ambil data dari Python
+		const dataGuru = {{ guru | tojson }};
+		let centerIndex = 1; 
+
+		function renderGuru() {
+			const display = document.getElementById('guru-display');
+			if (!display) return;
+        
+			display.innerHTML = ''; 
+
+			const offsets = [-2, -1, 0, 1, 2];
+        
+			offsets.forEach(offset => {
+				let targetIndex = (centerIndex + offset + dataGuru.length) % dataGuru.length;
+				const g = dataGuru[targetIndex];
+            
+				const statusClass = (offset === 0) ? 'focus' : 'side';
+            
+				display.innerHTML += `
+					<div class="card-guru ${statusClass}">
+						<img src="${g.img}" class="foto-kubah">
+						<div class="nama-box">${g.nama}</div>
+						<div class="mapel-box">${g.mapel}</div>
+					</div>
+				`;
+			});
+        
+			// CEK DI CONSOLE BROWSER (Tekan F12)
+			console.log("Guru tengah sekarang index ke: ", centerIndex);
+			console.log("Nama guru tengah: ", dataGuru[centerIndex].nama);
+		}
+
+		function moveSlider(direction) {
+			centerIndex = (centerIndex + direction + dataGuru.length) % dataGuru.length;
+			renderGuru();
+		}
+
+		// Jalankan pertama kali saat halaman dimuat
+		window.onload = renderGuru;
+	</script>
+	<script>
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				// Jika elemen masuk ke area pandang (viewport)
+				if (entry.isIntersecting) {
+					entry.target.classList.add('active');
+				} else {
+					// Opsional: hapus baris di bawah jika ingin animasi hanya sekali saja
+					// entry.target.classList.remove('active'); 
+				}
+			});
+		}, {
+			threshold: 0.1 // Animasi mulai saat 10% elemen terlihat
+		});
+
+		// Cari semua elemen dengan class 'reveal' dan jalankan pengamat (observer)
+		const revealElements = document.querySelectorAll('.reveal');
+		revealElements.forEach((el) => observer.observe(el));
+	</script>
+
+</body>
+</html>
