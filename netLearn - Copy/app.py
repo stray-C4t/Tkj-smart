@@ -12,7 +12,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.path.join(basedir, 'database.db')
 
 def get_db_connection():
-    conn = sqlite3.connect(os.path.join(BASE_DIR, 'database.db'))
+    conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
