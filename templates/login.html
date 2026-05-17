@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TKJ Smart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='logo.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hp.css') }}">
+</head>
+<body class="login-body">
+    <div class="finisher-header" id="full-bg"></div>
+    <div class="login-wrapper">
+        <div class="login-image">
+            <div class="image-overlay">
+                <h3>TKJ Smart</h3>
+                <p>Membangun masa depan digital dari sekolah.</p>
+            </div>
+        </div>
+        <div class="login-form-side">
+            <div class="form-content">
+				<div class="logo-container" style="margin-bottom: 0px; height: 57.5px;">
+					<div class="logo-icon">
+						<img src="{{ url_for('static', filename='photos/logo.PNG') }}" alt="logo">
+					</div>
+					<div class="logo-text">
+						<h1>
+							<span class="tkj">TKJ</span>
+							<span class="smart">Smart</span>
+						</h1>
+						<p class="subtitle">Teknik Komputer Dan Jaringan Pintar</p>
+					</div>
+				</div>
+                <h2>Selamat Datang</h2>
+                <p>Silakan login dengan akun dari sekolah</p>
+                <form action="/login" method="POST">
+
+                    {% set has_error = get_flashed_messages(category_filter=["error"]) %}
+
+                    <div class="input-group {% if has_error %}error{% endif %}">
+                        <label>NISN</label>
+                        <input type="text" name="username" placeholder="NISN" required>
+                    </div>
+
+                    <div class="input-group {% if has_error %}error{% endif %}">
+                        <label>Password</label>
+                        <input type="password" name="password" placeholder="********" required>
+
+                        {% if has_error %}
+                            <small class="error-text">{{ has_error[0] }}</small>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn-login">Masuk Sekarang</button>
+                </form>
+            <a href="/" class="back-home">← Kembali ke Beranda</a>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='Js/finisher-header.es5.min.js') }}"></script>
+</body>
+</html>

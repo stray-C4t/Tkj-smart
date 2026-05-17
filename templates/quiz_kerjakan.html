@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ judul }} Quiz - TKJ Smart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='quiz_kerjakan.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='hp.css') }}">
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="quiz-top-bar">
+			<div class="quest-count">
+				<i class="fas fa-list-ol"></i> <span id="current-quest-num">1</span>/{{ soal_list|length }}
+			</div>
+			<div class="timer-wrapper">
+				<div id="timer-bar" class="timer-bar"></div>
+			</div>
+			<div class="right-elements">
+				<div class="score-display">
+					<span id="score-val">0</span> <i class="fas fa-bolt"></i>
+				</div>
+				<a href="/quiz" class="exit-btn"><i class="fas fa-times"></i></a>
+			</div>
+		</div>
+        <div class="question-section" id="quiz-content">
+            <h1 id="question-text">Memuat pertanyaan...</h1>
+        </div>
+        <div id="options-container" class="options-container">
+            </div>
+
+        <div id="result-screen" class="result-screen hidden">
+			<div class="result-content">
+				<i class="fas fa-trophy trophy-icon"></i>
+				<h2>Kuis Selesai!</h2>
+				<div class="final-score-circle">
+					<span id="final-score">0</span>
+				</div>
+				<a href="/quiz" class="btn-back-menu">Kembali ke Menu</a>
+			</div>
+		</div>
+    </div>
+   <script id="quiz-play-data" type="application/json">
+		{{ {
+			"soal": soal_list,
+			"quizId": request.view_args['quiz_id']
+		} | tojson | safe }}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+	<script src="{{ url_for('static', filename='Js/quiz-kerjakan.js') }}"></script>
+</body>
+</html>

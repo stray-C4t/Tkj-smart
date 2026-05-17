@@ -1,0 +1,17 @@
+@media screen and (max-width: 768px) {
+    .container { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; }
+    .main-content { margin-left: 0; padding: 15px; }
+    .btn-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    table { width: 100%; display: block; overflow-x: auto; white-space: nowrap; }
+    .stats-grid { grid-template-columns: 1fr !important; }
+    .section-card { width: 100%; }
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar { position: relative; width: 100%; height: auto; }
+}
+
+img { max-width: 100%; height: auto; }
+
+* { box-sizing: border-box; }

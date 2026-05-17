@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Pembelajaran - TKJ Smart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='video.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='html.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hp.css') }}">
+</head>
+<body>
+
+    <div class="video-page-container">
+        <nav class="top-nav">
+            <a href="/dashboard" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+            </a>
+            <div class="user-profile">
+                <a href="/account">
+                    <img src="{{ url_for('static', filename='photos/foto-profil-default.JPG') }}" alt="Profile">
+                </a>
+            </div>
+        </nav>
+
+        <header class="video-header">
+            <h1>Video Pembelajaran</h1>
+            <p>Tonton dan pelajari keahlian teknis TKJ kapan saja, di mana saja.</p>
+            
+            <div class="search-wrapper">
+                <form class="search-bar" onsubmit="return false;">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" name="q" placeholder="Cari tutorial (ex: Mikrotik, Kabel UTP...)" autocomplete="off">
+                    <button type="submit">Cari Video</button>
+                </form>
+            </div>
+        </header>
+
+        <main class="video-content">
+            <div class="video-grid" id="videoGrid">
+                {% for v in videos %}
+                <div class="video-card reveal">
+                    <div class="video-thumbnail">
+                        <a href="/video/watch/{{ v.id }}">
+                            <img src="{{ v.thumbnail }}" alt="{{ v.judul }}">
+                        </a>
+                        <div class="play-btn">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <span class="vid-duration">{{ v.durasi }}</span>
+                    </div>
+                    <div class="video-body">
+                        <span class="vid-tag">Tutorial</span>
+                        <h3>{{ v.judul }}</h3>
+                        <p>{{ v.deskripsi }}</p>
+                        <a href="/video/watch/{{ v.id }}" class="btn-watch-now">Tonton Sekarang</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            {% if not videos %}
+            <div class="no-results">
+                <i class="fas fa-video-slash"></i>
+                <p>Maaf, video yang kamu cari tidak ditemukan.</p>
+                <a href="/video">Lihat Semua Video</a>
+            </div>
+            {% endif %}
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='Js/reveal.js') }}"></script>
+    <script src="{{ url_for('static', filename='Js/ajax-video.js') }}"></script>
+</body>
+</html>

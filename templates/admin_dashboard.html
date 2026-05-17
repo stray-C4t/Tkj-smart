@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - TKJ Smart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hp.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='html.css') }}">
+</head>
+<body>
+    <div class="container">
+    <div class="sidebar">
+        <h2>Smart Admin</h2>
+        <nav>
+            <a href="/admin/overview"><i class="fas fa-chart-line"></i> Overview</a>
+            <a href="/admin/dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="/dashboard"><i class="fas fa-external-link-alt"></i> Lihat Website</a>
+            <hr>
+            <a href="#" class="logout-link" onclick="openLogoutModal()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Manajemen Konten</h1>
+            <div class="btn-group">
+                <a href="/admin/add-modul" class="btn btn-primary">
+                    <i class="fas fa-book"></i> Modul
+                </a>
+                <a href="/admin/add-video" class="btn btn-success">
+                    <i class="fas fa-video"></i> Video
+                </a>
+                <a href="/admin/add-account" class="btn btn-info">
+                    <i class="fas fa-user-plus"></i> Akun
+                </a>
+                <a href="{{ url_for('add_quiz') }}" class="btn btn-masyaallah">
+                    <i class="fas fa-lightbulb"></i> Quiz
+                </a>
+            </div>
+        </div>
+        <div class="section-card">
+            <h3>Daftar Modul</h3>
+            <a href="/admin/add-modul" class="btn btn-primary" style="margin-bottom: 15px; display: inline-block;">
+                + Tambah Modul
+            </a>
+            <form method="GET" class="search-box">
+                <input type="text" name="modul_search" id="search-modul" placeholder="Cari modul..." value="{{ request.args.get('modul_search','') }}">
+                <button type="submit">Cari</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Judul</th>
+                        <th>Kategori</th>
+                        <th>Aksi</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody id="modulTable">
+                    {% for m in modules %}
+                    <tr>
+                        <td>{{ m.judul }}</td>
+                        <td><span class="badge">{{ m.kategori }}</span></td>
+                        <td>
+                            <a href="/admin/delete-modul/{{ m.id }}" class="btn-icon delete" onclick="return confirm('Hapus modul?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+							<a href="/admin/edit-modul/{{ m.id }}">
+								<i class="fas fa-edit"></i>
+							</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination" id="modulPagination">
+                {% for p in range(1, modul_pages + 1) %}
+                    <a href="#" data-page="{{ p }}" class="{% if p == modul_page %}active{% endif %}">
+                        {{ p }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="section-card">
+            <h3>Daftar Video</h3>
+            <a href="/admin/add-video" class="btn btn-primary" style="margin-bottom: 15px; display: inline-block;">
+                + Tambah Video
+            </a>
+            <form method="GET" class="search-box">
+                <input type="text" name="video_search" placeholder="Cari video..." value="{{ request.args.get('video_search','') }}" id="search-video">
+                <button type="submit">Cari</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Judul</th>
+                        <th>YouTube ID</th>
+                        <th>Aksi</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody id="videoTable">
+                    {% for v in videos %}
+                    <tr>
+                        <td>{{ v.judul }}</td>
+                        <td><code>{{ v.youtube_id }}</code></td>
+                        <td>
+                            <a href="/admin/delete-video/{{ v.id }}" class="btn-icon delete" onclick="return confirm('Hapus video?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+							<a href="/admin/edit-video/{{ v.id }}">
+								<i class="fas fa-edit"></i>
+							</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination" id="videoPagination">
+                {% for p in range(1, video_pages + 1) %}
+                    <a href="#" data-page="{{ p }}" class="{% if p == video_page %}active{% endif %}">
+                        {{ p }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="section-card">
+            <h3>Daftar Latihan Soal (Quiz)</h3>
+            <a href="{{ url_for('add_quiz') }}" class="btn btn-primary" style="margin-bottom: 15px; display: inline-block;">
+                + Tambah Latihan
+            </a>
+            <form method="GET" class="search-box">
+                <input type="text" name="quiz_search" placeholder="Cari quiz..." value="{{ quiz_search }}" id="search-quiz">
+                <button type="submit">Cari</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Judul Latihan</th>
+                        <th>Jumlah Soal</th>
+                        <th>Aksi</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody id="quizTable">
+                    {% for q in quizzes %}
+                    <tr>
+                        <td>{{ q.judul }}</td>
+                        <td>
+                            <span class="badge">{{ q.jumlah_soal }} Soal</span>
+                        </td>
+                        <td>
+                            <a href="/admin/delete-latihan/{{ q.id }}" 
+                               class="btn-icon delete" 
+                               onclick="return confirm('Hapus latihan?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+							<a href="/admin/edit-quiz/{{ q.id }}">
+								<i class="fas fa-edit"></i>
+							</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination" id="quizPagination">
+                {% for p in range(1, quiz_pages + 1) %}
+                    <a href="#" data-page="{{ p }}" class="{% if p == quiz_page %}active{% endif %}">
+                        {{ p }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="section-card">
+            <h3>Daftar Siswa Terdaftar</h3>
+            <a href="/admin/add-account" class="btn btn-primary" style="margin-bottom: 15px; display: inline-block;">
+                + Tambah Akun
+            </a>
+            <form method="GET" class="search-box">
+                <input type="text" name="user_search" placeholder="Cari nama lengkap atau username..." value="{{ user_search }}" id="search-user">
+                <button type="submit">Cari</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Nama Lengkap</th>
+                        <th>Kelas</th>
+                        <th>Role</th>
+                        <th>Aksi</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody id="userTable">
+                    {% for u in users %}
+                    <tr>
+                        <td>{{ u.username }}</td>
+                        <td>{{ u.nama_lengkap }}</td>
+                        <td>{{ u.kelas }}</td>
+                        <td><span class="badge">{{ u.role }}</span></td>
+                        <td>
+                            <a href="/admin/delete-user/{{ u.id }}" 
+                               class="btn-icon delete" 
+                               onclick="return confirm('Hapus akun ini?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+							<a href="/admin/edit-user/{{ u.id }}">
+								<i class="fas fa-edit"></i>
+							</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination" id="userPagination">
+                {% for p in range(1, user_pages + 1) %}
+                    <a href="#" data-page="{{ p }}" class="{% if p == user_page %}active{% endif %}">
+                        {{ p }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <div id="logoutModal" class="modal-overlay">
+		<div class="modal-box">
+			<div class="modal-icon">
+				<i class="fas fa-exclamation-circle"></i>
+			</div>
+			<h2>Yakin ingin keluar?</h2>
+			<p>Kamu akan keluar dari sesi pembelajaran saat ini.</p>
+			<div class="modal-buttons">
+				<button class="btn-cancel" onclick="closeLogoutModal()">Batal</button>
+				<a href="/logout" class="btn-confirm">Ya, Keluar</a>
+			</div>
+		</div>
+	</div>
+    <script src="{{ url_for('static', filename='Js/admin-dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='Js/logout.js') }}"></script>
+</body>
+</html>

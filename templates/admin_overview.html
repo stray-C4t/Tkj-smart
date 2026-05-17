@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Overview - TKJ Smart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='overview.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hp.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Smart Admin</h2>
+        <nav>
+            <a href="/admin/overview" class="active">
+                <i class="fas fa-chart-line"></i> Overview
+            </a>
+            <a href="/admin/dashboard">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="/dashboard">
+                <i class="fas fa-external-link-alt"></i> Lihat Website
+            </a>
+            <hr>
+            <a href="#" class="logout-link" onclick="openLogoutModal()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Overview Sistem</h1>
+            <p style="color:gray;">Ringkasan data pembelajaran TKJ Smart</p>
+        </div>
+        <div class="overview-grid">
+            <div class="section-card stat-card">
+                <div class="card-top">
+                    <h3>Total User</h3>
+                    <i class="fas fa-users"></i>
+                </div>
+                <h2>{{ total_users }}</h2>
+                <small class="card-info">Data saat ini</small>
+            </div>
+
+            <div class="section-card stat-card">
+                <div class="card-top">
+                    <h3>Total Video</h3>
+                    <i class="fas fa-video"></i>
+                </div>
+                <h2>{{ total_video }}</h2>
+                <small class="card-info">Video tersedia</small>
+            </div>
+
+            <div class="section-card stat-card">
+                <div class="card-top">
+                    <h3>Total Quiz</h3>
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <h2>{{ total_quiz }}</h2>
+                <small class="card-info">Soal latihan</small>
+            </div>
+
+            <div class="section-card stat-card">
+                <div class="card-top">
+                    <h3>Total Modul</h3>
+                    <i class="fas fa-book"></i>
+                </div>
+                <h2>{{ total_modul }}</h2>
+                <small class="card-info">Materi pembelajaran</small>
+            </div>
+        </div>
+        <div class="section-card">
+            <h3>Jumlah Siswa per Kelas</h3>
+            <div class="chart" id="chart"></div>
+        </div>
+        <div class="bottom-grid">
+        <div class="section-card" style="margin-top:20px;">
+            <h3>Aktivitas Terbaru</h3>
+            <div id="activity-container" style="margin-top:10px;">
+                {% for a in recent_activity %}
+                <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee;">
+                    <div>
+                        <strong>{{ a.nama_lengkap }}</strong><br>
+                        <small>{{ a.activity }}</small>
+                    </div>
+                    <div style="color:gray; font-size:12px;">
+                        {{ a.created_at }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div id="logoutModal" class="modal-overlay">
+		<div class="modal-box">
+			<div class="modal-icon">
+				<i class="fas fa-exclamation-circle"></i>
+			</div>
+			<h2>Yakin ingin keluar?</h2>
+			<p>Kamu akan keluar dari sesi pembelajaran saat ini.</p>
+			<div class="modal-buttons">
+				<button class="btn-cancel" onclick="closeLogoutModal()">Batal</button>
+				<a href="/logout" class="btn-confirm">Ya, Keluar</a>
+			</div>
+		</div>
+	</div>
+    <script src="{{ url_for('static', filename='Js/logout.js') }}"></script>
+    <script id="chart-data" type="application/json">
+        {{ {
+            "labels": kelas_labels,
+            "values": kelas_values
+        } | tojson | safe }}
+    </script>
+
+    <div id="chart"></div>
+
+    <script src="{{ url_for('static', filename='Js/chart-bar.js') }}"></script>
+    <script src="{{ url_for('static', filename='Js/activity.js') }}"></script>
+</body>
+</html>
